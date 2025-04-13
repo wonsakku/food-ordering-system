@@ -6,13 +6,10 @@
         <artifactId>food-ordering-system</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <modules>
-        <module>order-container</module>
-        <module>order-dataaccess</module>
-        <module>order-messaging</module>
-        <module>order-domain</module>
-        <module>order-application</module>
-    </modules>
-    <artifactId>order-service</artifactId>
+    <artifactId>common</artifactId>
     <packaging>pom</packaging>
+    <name>common</name>
+    <modules>
+        <module>common-domain</module>
+    </modules>
 </project>

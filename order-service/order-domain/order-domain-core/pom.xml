@@ -8,4 +8,10 @@
     </parent>
     <artifactId>order-domain-core</artifactId>
     <name>order-domain-core</name>
+    <dependencies>
+        <dependency>
+            <groupId>org.food.ordering.system</groupId>
+            <artifactId>common-domain</artifactId>
+        </dependency>
+    </dependencies>
 </project>
