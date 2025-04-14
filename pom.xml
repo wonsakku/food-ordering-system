@@ -25,7 +25,7 @@
 
   <properties>
     <maven-compiler-plugin.version>3.9.0</maven-compiler-plugin.version>
-
+    <mockto.version>4.3.1</mockto.version>
   </properties>
 
   <dependencyManagement>
@@ -60,6 +60,12 @@
         <artifactId>common-domain</artifactId>
         <version>${project.version}</version>
       </dependency>
+      <dependency>
+        <groupId>org.mockito</groupId>
+        <artifactId>mockito-core</artifactId>
+        <version>${mockto.version}</version>
+        <scope>test</scope>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 
@@ -81,7 +87,7 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>${maven-compiler-plugin.version}</version>
         <configuration>
-          <release>21</release>
+          <release>17</release>
         </configuration>
       </plugin>
     </plugins>
