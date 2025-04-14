@@ -161,6 +161,10 @@ public class Order extends AggregateRoot<OrderId> {
         return failureMessages;
     }
 
+    public static Builder builder() {
+        return new Builder();
+    }
+
     public static final class Builder {
         private OrderId orderId;
         private CustomerId customerId;
@@ -175,9 +179,6 @@ public class Order extends AggregateRoot<OrderId> {
         private Builder() {
         }
 
-        public static Builder builder() {
-            return new Builder();
-        }
 
         public Builder orderId(OrderId val) {
             orderId = val;
