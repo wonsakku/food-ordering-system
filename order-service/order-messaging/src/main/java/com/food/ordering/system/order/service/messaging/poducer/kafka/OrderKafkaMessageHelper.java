@@ -11,6 +11,9 @@ import org.springframework.util.concurrent.ListenableFutureCallback;
 @Component
 public class OrderKafkaMessageHelper {
 
+    // callback 메서드가 지금은 로그를 남기는 것 뿐이지만
+    // saga & outbox 패턴을 구현하면 이 로직이 중요해짐.
+    // 복원력이 높은 시스템을 얻기 위해 이 코드를 리팩토링할 것임.
     public <T> ListenableFutureCallback<SendResult<String, T>> getKafkaCallback(String responseTopicName,
                                                                                 T requestAvroModel,
                                                                                 String orderId,
