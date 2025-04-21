@@ -7,6 +7,20 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
     <artifactId>payment-dataaccess</artifactId>
-    <name>Archetype - payment-dataaccess</name>
-    <url>http://maven.apache.org</url>
+    <name>payment-dataaccess</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.food.ordering.system</groupId>
+            <artifactId>payment-application-service</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+        </dependency>
+    </dependencies>
 </project>
