@@ -1,17 +1,13 @@
 package com.food.ordering.system.restaurant.service.domain;
 
 import com.food.ordering.system.domain.valueobject.OrderId;
-import com.food.ordering.system.outbox.OutboxStatus;
 import com.food.ordering.system.restaurant.service.domain.dto.RestaurantApprovalRequest;
 import com.food.ordering.system.restaurant.service.domain.entity.Restaurant;
 import com.food.ordering.system.restaurant.service.domain.event.OrderApprovalEvent;
 import com.food.ordering.system.restaurant.service.domain.exception.RestaurantNotFoundException;
 import com.food.ordering.system.restaurant.service.domain.mapper.RestaurantDataMapper;
-import com.food.ordering.system.restaurant.service.domain.outbox.model.OrderOutboxMessage;
-import com.food.ordering.system.restaurant.service.domain.outbox.scheduler.OrderOutboxHelper;
 import com.food.ordering.system.restaurant.service.domain.ports.output.message.publisher.OrderApprovedMessagePublisher;
 import com.food.ordering.system.restaurant.service.domain.ports.output.message.publisher.OrderRejectedMessagePublisher;
-import com.food.ordering.system.restaurant.service.domain.ports.output.message.publisher.RestaurantApprovalResponseMessagePublisher;
 import com.food.ordering.system.restaurant.service.domain.ports.output.repository.OrderApprovalRepository;
 import com.food.ordering.system.restaurant.service.domain.ports.output.repository.RestaurantRepository;
 import lombok.extern.slf4j.Slf4j;
