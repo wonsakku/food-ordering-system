@@ -30,8 +30,6 @@ public class RestaurantApprovalRequestHelper {
     private final OrderApprovedMessagePublisher orderApprovedMessagePublisher;
     private final OrderRejectedMessagePublisher orderRejectedMessagePublisher;
 
-
-
     public RestaurantApprovalRequestHelper(RestaurantDomainService restaurantDomainService,
                                            RestaurantDataMapper restaurantDataMapper,
                                            RestaurantRepository restaurantRepository,
@@ -48,23 +46,16 @@ public class RestaurantApprovalRequestHelper {
 
     @Transactional
     public OrderApprovalEvent persistOrderApproval(RestaurantApprovalRequest restaurantApprovalRequest) {
-//        if (publishIfOutboxMessageProcessed(restaurantApprovalRequest)) {
-//            log.info("An outbox message with saga id: {} already saved to database!",
-//                    restaurantApprovalRequest.getSagaId());
-//            return;
-//        }
-
         log.info("Processing restaurant approval for order id: {}", restaurantApprovalRequest.getOrderId());
         List<String> failureMessages = new ArrayList<>();
         Restaurant restaurant = findRestaurant(restaurantApprovalRequest);
-        OrderApprovalEvent orderApprovalEvent = restaurantDomainService.validateOrder(
+        OrderApprovalEvent orderApprovalEvent =
+                restaurantDomainService.validateOrder(
                         restaurant,
                         failureMessages,
                         orderApprovedMessagePublisher,
-                        orderRejectedMessagePublisher
-                );
+                        orderRejectedMessagePublisher);
         orderApprovalRepository.save(restaurant.getOrderApproval());
-
         return orderApprovalEvent;
     }
 
@@ -90,16 +81,4 @@ public class RestaurantApprovalRequestHelper {
 
         return restaurant;
     }
-
-//    private boolean publishIfOutboxMessageProcessed(RestaurantApprovalRequest restaurantApprovalRequest) {
-//        Optional<OrderOutboxMessage> orderOutboxMessage =
-//                orderOutboxHelper.getCompletedOrderOutboxMessageBySagaIdAndOutboxStatus(UUID
-//                        .fromString(restaurantApprovalRequest.getSagaId()), OutboxStatus.COMPLETED);
-//        if (orderOutboxMessage.isPresent()) {
-//            restaurantApprovalResponseMessagePublisher.publish(orderOutboxMessage.get(),
-//                    orderOutboxHelper::updateOutboxStatus);
-//            return true;
-//        }
-//        return false;
-//    }
 }

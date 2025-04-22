@@ -10,5 +10,4 @@ public interface CreditEntryRepository {
     CreditEntry save(CreditEntry creditEntry);
 
     Optional<CreditEntry> findByCustomerId(CustomerId customerId);
-
 }

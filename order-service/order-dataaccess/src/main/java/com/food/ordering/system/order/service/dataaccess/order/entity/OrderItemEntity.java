@@ -7,19 +7,18 @@ import java.math.BigDecimal;
 import java.util.Objects;
 import java.util.UUID;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
-@Setter
 @Getter
-@IdClass(OrderItemEntityId.class) // 다중 열 기본 키가 있는 엔티티에서 Id 클래스를 사용하는데 필요?
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@IdClass(OrderItemEntityId.class)
 @Table(name = "order_items")
 @Entity
 public class OrderItemEntity {
-
     @Id
     private Long id;
-
+    @Id
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "ORDER_ID")
     private OrderEntity order;
@@ -31,9 +30,10 @@ public class OrderItemEntity {
 
     @Override
     public boolean equals(Object o) {
+        if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         OrderItemEntity that = (OrderItemEntity) o;
-        return Objects.equals(id, that.id) && Objects.equals(order, that.order);
+        return id.equals(that.id) && order.equals(that.order);
     }
 
     @Override
