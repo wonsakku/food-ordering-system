@@ -23,6 +23,7 @@ public class OrderDetail extends BaseEntity<OrderId> {
         return new Builder();
     }
 
+
     public OrderStatus getOrderStatus() {
         return orderStatus;
     }

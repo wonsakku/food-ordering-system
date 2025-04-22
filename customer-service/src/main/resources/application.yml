@@ -1,17 +1,16 @@
 server:
   port: 8184
 
-
 spring:
   jpa:
     open-in-view: false
-    show-sql: true
+    show-sql: false
     database-platform: org.hibernate.dialect.PostgreSQL9Dialect
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQL9Dialect
   datasource:
-    url: jdbc:postgresql://192.168.225.129:5432/postgres?currentSchema=customer&binaryTransfer=true&reWriteBatchedInserts=true&stringtype=unspecified
+    url: jdbc:postgresql://192.1568.225.129:5432/postgres?currentSchema=customer&binaryTransfer=true&reWriteBatchedInserts=true
     username: postgres
     password: admin
     driver-class-name: org.postgresql.Driver
@@ -19,4 +18,3 @@ spring:
     schema: classpath:init-schema.sql
     data: classpath:init-data.sql
     initialization-mode: always
-

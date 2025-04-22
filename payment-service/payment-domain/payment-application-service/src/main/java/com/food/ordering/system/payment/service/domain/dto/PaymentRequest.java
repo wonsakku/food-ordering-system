@@ -23,5 +23,4 @@ public class PaymentRequest {
     public void setPaymentOrderStatus(PaymentOrderStatus paymentOrderStatus) {
         this.paymentOrderStatus = paymentOrderStatus;
     }
-
 }
