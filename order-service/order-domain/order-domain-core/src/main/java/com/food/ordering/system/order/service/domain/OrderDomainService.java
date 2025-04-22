@@ -20,4 +20,5 @@ public interface OrderDomainService {
     OrderCancelledEvent cancelOrderPayment(Order order, List<String> failureMessages, DomainEventPublisher<OrderCancelledEvent> orderCancelledEventDomainEventPublisher);
 
     void cancelOrder(Order order, List<String> failureMessages);
+
 }

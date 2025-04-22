@@ -12,6 +12,7 @@ public interface RestaurantDomainService {
 
     OrderApprovalEvent validateOrder(Restaurant restaurant,
                                      List<String> failureMessages,
-                                     DomainEventPublisher<OrderApprovedEvent> orderApprovedEventDomainEventPublisher,
-                                     DomainEventPublisher<OrderRejectedEvent> orderRejectedEventDomainEventPublisher);
+                                     DomainEventPublisher<OrderApprovedEvent> approvedEventDomainEventPublisher,
+                                     DomainEventPublisher<OrderRejectedEvent> orderRejectedEventDomainEventPublisher
+    );
 }

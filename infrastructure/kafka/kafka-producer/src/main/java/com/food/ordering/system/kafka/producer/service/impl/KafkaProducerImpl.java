@@ -16,7 +16,7 @@ import java.io.Serializable;
 
 @Slf4j
 @Component
-public class KafkaProducerImpl<K extends Serializable, V extends SpecificRecordBase> implements KafkaProducer<K, V> {
+public class KafkaProducerImpl <K extends Serializable, V extends SpecificRecordBase> implements KafkaProducer<K, V> {
 
     private final KafkaTemplate<K, V> kafkaTemplate;
 
@@ -45,3 +45,12 @@ public class KafkaProducerImpl<K extends Serializable, V extends SpecificRecordB
         }
     }
 }
+
+
+
+
+
+
+
+
+

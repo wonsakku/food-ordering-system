@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.validation.constraints.NotNull;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -23,69 +24,65 @@ import java.util.UUID;
 public class OrderCreateHelper {
 
     private final OrderDomainService orderDomainService;
-
     private final OrderRepository orderRepository;
-
     private final CustomerRepository customerRepository;
-
     private final RestaurantRepository restaurantRepository;
-
     private final OrderDataMapper orderDataMapper;
-
-    private final OrderCreatedPaymentRequestMessagePublisher orderCreatedEventDomainEventPublisher;
+    private final OrderCreatedPaymentRequestMessagePublisher orderCreatedPaymentRequestMessagePublisher;
 
     public OrderCreateHelper(OrderDomainService orderDomainService,
                              OrderRepository orderRepository,
                              CustomerRepository customerRepository,
                              RestaurantRepository restaurantRepository,
                              OrderDataMapper orderDataMapper,
-                             OrderCreatedPaymentRequestMessagePublisher orderCreatedEventDomainEventPublisher) {
+                             OrderCreatedPaymentRequestMessagePublisher orderCreatedPaymentRequestMessagePublisher) {
         this.orderDomainService = orderDomainService;
         this.orderRepository = orderRepository;
         this.customerRepository = customerRepository;
         this.restaurantRepository = restaurantRepository;
         this.orderDataMapper = orderDataMapper;
-        this.orderCreatedEventDomainEventPublisher = orderCreatedEventDomainEventPublisher;
+        this.orderCreatedPaymentRequestMessagePublisher = orderCreatedPaymentRequestMessagePublisher;
     }
 
     @Transactional
-    public OrderCreatedEvent persistOrder(CreateOrderCommand createOrderCommand) {
+    public OrderCreatedEvent persistOrder(CreateOrderCommand createOrderCommand){
         checkCustomer(createOrderCommand.getCustomerId());
         Restaurant restaurant = checkRestaurant(createOrderCommand);
-        Order order = orderDataMapper.createOrderCommandToOrder(createOrderCommand);
-        OrderCreatedEvent orderCreatedEvent = orderDomainService.validateAndInitiateOrder(order, restaurant,
-                orderCreatedEventDomainEventPublisher);
+        Order order = orderDataMapper.createOrderComfmandToOrder(createOrderCommand);
+        OrderCreatedEvent orderCreatedEvent = orderDomainService.validateAndInitiateOrder(order, restaurant, orderCreatedPaymentRequestMessagePublisher);
         saveOrder(order);
-        log.info("Order is created with id: {}", orderCreatedEvent.getOrder().getId().getValue());
+        log.info("Order is created with id : {}", orderCreatedEvent.getOrder().getId().getValue());
         return orderCreatedEvent;
     }
+
 
     private Restaurant checkRestaurant(CreateOrderCommand createOrderCommand) {
         Restaurant restaurant = orderDataMapper.createOrderCommandToRestaurant(createOrderCommand);
         Optional<Restaurant> optionalRestaurant = restaurantRepository.findRestaurantInformation(restaurant);
-        if (optionalRestaurant.isEmpty()) {
-            log.warn("Could not find restaurant with restaurant id: {}", createOrderCommand.getRestaurantId());
-            throw new OrderDomainException("Could not find restaurant with restaurant id: " +
-                    createOrderCommand.getRestaurantId());
+        if(optionalRestaurant.isEmpty()){
+            log.warn("Could not find restaurant with restaurant id : {}", createOrderCommand.getRestaurantId());
+            throw new OrderDomainException("Could not find restaurant with restaurant id : " + createOrderCommand.getRestaurantId());
         }
         return optionalRestaurant.get();
     }
 
-    private void checkCustomer(UUID customerId) {
+
+    private void checkCustomer(@NotNull UUID customerId) {
         Optional<Customer> customer = customerRepository.findCustomer(customerId);
-        if (customer.isEmpty()) {
-            log.warn("Could not find customer with customer id: {}", customerId);
-            throw new OrderDomainException("Could not find customer with customer id: " + customer);
+        if(customer.isEmpty()){
+            log.warn("Could not find customer with customer id : {}", customerId);
+            throw new OrderDomainException("Could not find customer with customer id : " + customerId);
         }
     }
 
-    private Order saveOrder(Order order) {
+    private Order saveOrder(Order order){
         Order orderResult = orderRepository.save(order);
-        if (orderResult == null) {
-            log.error("Could not save order!");
-            throw new OrderDomainException("Could not save order!");
+        if(orderResult == null){
+            log.error("Count not save order!");
+            throw new OrderDomainException("Count not save order!");
         }
-        log.info("Order is saved with id: {}", orderResult.getId().getValue());
+        log.info("Order is saved with id : {}", orderResult.getId().getValue());
         return orderResult;
     }
+
 }

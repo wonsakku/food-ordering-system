@@ -10,13 +10,13 @@ import java.math.BigDecimal;
 import java.util.Objects;
 import java.util.UUID;
 
-@Getter
-@Setter
-@Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@Setter
+@Getter
 @IdClass(RestaurantEntityId.class)
-@Table(name = "order_restaurant_m_view", schema = "restaurant")
+@Table(name = "order_restaurant_m_view", schema = "restaurant") // 초기 예제에서는 view 를 사용
 @Entity
 public class RestaurantEntity {
 
@@ -32,10 +32,9 @@ public class RestaurantEntity {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         RestaurantEntity that = (RestaurantEntity) o;
-        return restaurantId.equals(that.restaurantId) && productId.equals(that.productId);
+        return Objects.equals(restaurantId, that.restaurantId) && Objects.equals(productId, that.productId);
     }
 
     @Override

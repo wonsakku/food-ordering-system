@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 
 @Component
 public class RestaurantMessagingDataMapper {
+
     public RestaurantApprovalResponseAvroModel
     orderApprovedEventToRestaurantApprovalResponseAvroModel(OrderApprovedEvent orderApprovedEvent) {
         return RestaurantApprovalResponseAvroModel.newBuilder()
@@ -25,29 +26,27 @@ public class RestaurantMessagingDataMapper {
                 .setOrderId(orderApprovedEvent.getOrderApproval().getOrderId().getValue().toString())
                 .setRestaurantId(orderApprovedEvent.getRestaurantId().getValue().toString())
                 .setCreatedAt(orderApprovedEvent.getCreatedAt().toInstant())
-                .setOrderApprovalStatus(OrderApprovalStatus.valueOf(orderApprovedEvent.
-                        getOrderApproval().getApprovalStatus().name()))
+                .setOrderApprovalStatus(OrderApprovalStatus.valueOf(orderApprovedEvent.getOrderApproval().getApprovalStatus().name()))
                 .setFailureMessages(orderApprovedEvent.getFailureMessages())
                 .build();
     }
 
     public RestaurantApprovalResponseAvroModel
-    orderRejectedEventToRestaurantApprovalResponseAvroModel(OrderRejectedEvent orderRejectedEvent) {
+    orderRejectedEventToRestaurantApprovalResponseAvroModel(OrderRejectedEvent orderRejectedEvent){
         return RestaurantApprovalResponseAvroModel.newBuilder()
                 .setId(UUID.randomUUID().toString())
                 .setSagaId("")
                 .setOrderId(orderRejectedEvent.getOrderApproval().getOrderId().getValue().toString())
                 .setRestaurantId(orderRejectedEvent.getRestaurantId().getValue().toString())
                 .setCreatedAt(orderRejectedEvent.getCreatedAt().toInstant())
-                .setOrderApprovalStatus(OrderApprovalStatus.valueOf(orderRejectedEvent.
-                        getOrderApproval().getApprovalStatus().name()))
+                .setOrderApprovalStatus(OrderApprovalStatus.valueOf(orderRejectedEvent.getOrderApproval().getApprovalStatus().name()))
                 .setFailureMessages(orderRejectedEvent.getFailureMessages())
                 .build();
     }
 
     public RestaurantApprovalRequest
     restaurantApprovalRequestAvroModelToRestaurantApproval(RestaurantApprovalRequestAvroModel
-                                                                   restaurantApprovalRequestAvroModel) {
+                                                                   restaurantApprovalRequestAvroModel){
         return RestaurantApprovalRequest.builder()
                 .id(restaurantApprovalRequestAvroModel.getId())
                 .sagaId(restaurantApprovalRequestAvroModel.getSagaId())

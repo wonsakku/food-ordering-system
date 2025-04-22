@@ -6,14 +6,15 @@ import javax.persistence.*;
 import java.util.Objects;
 import java.util.UUID;
 
-@Getter
-@Setter
-@Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@Setter
+@Getter
 @Table(name = "order_address")
 @Entity
 public class OrderAddressEntity {
+
     @Id
     private UUID id;
 
@@ -27,14 +28,13 @@ public class OrderAddressEntity {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         OrderAddressEntity that = (OrderAddressEntity) o;
-        return id.equals(that.id);
+        return Objects.equals(id, that.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hashCode(id);
     }
 }

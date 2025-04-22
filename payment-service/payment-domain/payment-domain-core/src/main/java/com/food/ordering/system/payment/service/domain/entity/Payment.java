@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.UUID;
 
 public class Payment extends AggregateRoot<PaymentId> {
-
     private final OrderId orderId;
     private final CustomerId customerId;
     private final Money price;
@@ -21,18 +20,18 @@ public class Payment extends AggregateRoot<PaymentId> {
     private PaymentStatus paymentStatus;
     private ZonedDateTime createdAt;
 
-    public void initializePayment() {
+    public void initializePayment(){
         setId(new PaymentId(UUID.randomUUID()));
         createdAt = ZonedDateTime.now(ZoneId.of("UTC"));
     }
 
-    public void validatePayment(List<String> failureMessages) {
-        if (price == null || !price.isGreaterThanZero()) {
+    public void validatePayment(List<String> failureMessages){
+        if(price == null || !price.isGreaterThanZero()){
             failureMessages.add("Total price must be greater than zero!");
         }
     }
 
-    public void updateStatus(PaymentStatus paymentStatus) {
+    public void updateStatus(PaymentStatus paymentStatus){
         this.paymentStatus = paymentStatus;
     }
 
@@ -41,12 +40,8 @@ public class Payment extends AggregateRoot<PaymentId> {
         orderId = builder.orderId;
         customerId = builder.customerId;
         price = builder.price;
-        paymentStatus = builder.paymentStatus;
-        createdAt = builder.createdAt;
-    }
-
-    public static Builder builder() {
-        return new Builder();
+        setPaymentStatus(builder.paymentStatus);
+        setCreatedAt(builder.createdAt);
     }
 
 
@@ -66,9 +61,23 @@ public class Payment extends AggregateRoot<PaymentId> {
         return paymentStatus;
     }
 
+    public void setPaymentStatus(PaymentStatus paymentStatus) {
+        this.paymentStatus = paymentStatus;
+    }
+
     public ZonedDateTime getCreatedAt() {
         return createdAt;
     }
+
+    public void setCreatedAt(ZonedDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
 
     public static final class Builder {
         private PaymentId paymentId;

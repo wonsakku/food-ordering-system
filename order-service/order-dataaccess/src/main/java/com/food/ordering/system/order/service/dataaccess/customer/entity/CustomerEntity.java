@@ -7,15 +7,17 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.UUID;
 
-@Getter
-@Setter
-@Builder
-@NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "order_customer_m_view", schema = "customer")
+@NoArgsConstructor
+@Builder
+@Setter
+@Getter
+@Table(name = "order_customer_m_view", schema = "customer") // 초기 예제에서는 view 를 사용
 @Entity
 public class CustomerEntity {
 
     @Id
     private UUID id;
+
+
 }
