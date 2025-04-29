@@ -1,6 +1,7 @@
 package com.food.ordering.system.order.service.messaging.mapper;
 
 import com.food.ordering.system.kafka.order.avro.model.*;
+import com.food.ordering.system.order.service.domain.dto.message.CustomerModel;
 import com.food.ordering.system.order.service.domain.dto.message.PaymentResponse;
 import com.food.ordering.system.order.service.domain.dto.message.RestaurantApprovalResponse;
 import com.food.ordering.system.order.service.domain.entity.Order;
@@ -48,6 +49,19 @@ public class OrderMessagingDataMapper {
                 .build();
     }
 
+    public PaymentRequestAvroModel orderPaymentEventToPaymentRequestAvroModel(String sagaId, OrderPaymentEventPayload
+            orderPaymentEventPayload) {
+        return PaymentRequestAvroModel.newBuilder()
+                .setId(UUID.randomUUID().toString())
+                .setSagaId(sagaId)
+                .setCustomerId(orderPaymentEventPayload.getCustomerId())
+                .setOrderId(orderPaymentEventPayload.getOrderId())
+                .setPrice(orderPaymentEventPayload.getPrice())
+                .setCreatedAt(orderPaymentEventPayload.getCreatedAt().toInstant())
+                .setPaymentOrderStatus(PaymentOrderStatus.valueOf(orderPaymentEventPayload.getPaymentOrderStatus()))
+                .build();
+    }
+
     public RestaurantApprovalRequestAvroModel
     orderApprovalEventToRestaurantApprovalRequestAvroModel(String sagaId, OrderApprovalEventPayload
             orderApprovalEventPayload) {
@@ -68,16 +82,12 @@ public class OrderMessagingDataMapper {
                 .build();
     }
 
-    public PaymentRequestAvroModel orderPaymentEventToPaymentRequestAvroModel(String sagaId, OrderPaymentEventPayload
-            orderPaymentEventPayload) {
-        return PaymentRequestAvroModel.newBuilder()
-                .setId(UUID.randomUUID().toString())
-                .setSagaId(sagaId)
-                .setCustomerId(orderPaymentEventPayload.getCustomerId())
-                .setOrderId(orderPaymentEventPayload.getOrderId())
-                .setPrice(orderPaymentEventPayload.getPrice())
-                .setCreatedAt(orderPaymentEventPayload.getCreatedAt().toInstant())
-                .setPaymentOrderStatus(PaymentOrderStatus.valueOf(orderPaymentEventPayload.getPaymentOrderStatus()))
+    public CustomerModel customerAvroModeltoCustomerModel(CustomerAvroModel customerAvroModel) {
+        return CustomerModel.builder()
+                .id(customerAvroModel.getId())
+                .username(customerAvroModel.getUsername())
+                .firstName(customerAvroModel.getFirstName())
+                .lastName(customerAvroModel.getLastName())
                 .build();
     }
 }
